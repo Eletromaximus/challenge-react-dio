@@ -5,7 +5,7 @@ export const CardStyle = styled.div`
   height: 350px;
   display: flex;
   flex-direction: column;
-
+  margin-top: 30px;
   border: 2px solid gray;
 
   .movie-image {

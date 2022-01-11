@@ -1,18 +1,13 @@
 import Card from './components/Card'
-import Header from './components/Header'
-import { Container } from './styles'
+import WebSitePages from './components/WebSitePage'
 
 export default function App () {
   return (
-    <div className="App">
-      <Header />
-
-      <Container value={8} >
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-      </Container>
-    </div>
+    <WebSitePages>
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+    </WebSitePages>
   )
 }
