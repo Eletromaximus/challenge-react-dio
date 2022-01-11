@@ -4,12 +4,14 @@ import { StyleButton } from './styles'
 
 interface IButton{
   onClick?: () => void,
-  children: React.ReactNode | any
+  backgroundColor?: string,
+  children?: React.ReactNode | undefined
 }
-export default function Button ({ onClick, children }: IButton) {
+export default function Button ({ onClick, children, backgroundColor }: IButton) {
   return (
     <StyleButton
-      onClick={() => onClick}
+      background={backgroundColor}
+      onClick={onClick}
     >
       {children}
     </StyleButton>
