@@ -1,21 +1,22 @@
 import styled from 'styled-components'
 
 export const CardStyle = styled.div`
-  width: 204px;
-  height: 350px;
+  width: 302px;
+  height: 455px;
   display: flex;
   flex-direction: column;
-  margin-top: 30px;
+  margin: 30px auto;
   border: 2px solid gray;
 
   .movie-image {
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
   }
-`
+  `
 export const LikeStyle = styled.div`
   position: absolute;
-  margin-left: 155px;
+  margin-left: 265px;
   z-index: 1;
 `
 export const ContentStyle = styled.div`
@@ -33,10 +34,6 @@ export const ContentStyle = styled.div`
       padding: 0 5px;
     }
   }
-
-  /* img {
-    padding: 0 6px;
-  } */
 
   button {
     width: 100%;

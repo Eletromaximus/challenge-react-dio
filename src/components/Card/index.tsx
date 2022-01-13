@@ -3,15 +3,21 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { useEffect, useState } from 'react'
 import Button from '../commons/Button'
-
+export { Genres } from './Genres'
 interface ICard {
-  source?: string
+  title: string,
+  poster?: string | null,
+  voteAverage?: number,
+  genre?: string
 }
 
-export default function Card ({ source }: ICard) {
-  const [sourceImage, setSourceImage] = useState(
-    'http://placehold.jp/200x200.png'
-  )
+export default function Card (data: ICard) {
+  const [card, setCard] = useState<ICard>({
+    poster: 'http://placehold.jp/200x200.png',
+    title: 'Título',
+    voteAverage: 0
+  })
+
   const [favorite, setFavofite] = useState(
     <FavoriteBorderIcon fontSize='large'/>
   )
@@ -19,22 +25,29 @@ export default function Card ({ source }: ICard) {
 
   useEffect(() => {
     setFavofite(like
-      ? <FavoriteIcon fontSize='large' />
+      ? <FavoriteIcon fontSize='large' color='secondary' />
       : <FavoriteBorderIcon fontSize='large' />
     )
   }, [like])
 
   useEffect(() => {
-    if (source) {
-      setSourceImage(source)
+    if (data) {
+      setCard({
+        poster: data.poster || 'http://placehold.jp/200x200.png',
+        title: data.title,
+        voteAverage: data.voteAverage || 0,
+        genre: data.genre === 'undefined'
+          ? 'Gênero'
+          : data.genre
+      })
     }
-  }, [source])
+  }, [data])
 
   return (
     <S.CardStyle>
       <div className="movie-image">
         <img
-          src={sourceImage}
+          src={`https://image.tmdb.org/t/p/w300${data.poster}`}
           alt='product image'
         />
       </div>
@@ -52,7 +65,7 @@ export default function Card ({ source }: ICard) {
       <S.ContentStyle >
         <span>
           <b>
-            Nome do Filme
+            {card.title}
           </b>
         </span>
 
@@ -61,8 +74,8 @@ export default function Card ({ source }: ICard) {
             src='/estrela.png'
             alt='star'
           />
-          <span>7</span>
-          <span>Genero</span>
+          <span>{card.voteAverage}</span>
+          <p>{card.genre}</p>
         </div>
 
         <span className="price">

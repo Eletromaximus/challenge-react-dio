@@ -1,27 +1,23 @@
-import { Grid } from '../../layout/Grid'
+import { Box } from '../../layout/Box'
 import Header from '../Header'
 
 interface IWebSitePages {
   // eslint-disable-next-line no-undef
-  children: React.ReactNode,
+  children: React.ReactNode | any,
 }
 export default function WebSitePages ({
   children
 }: IWebSitePages) {
   return (
-    <Grid
-      display='flex'
-      value={{
-        md: 10,
-        lg: 8
-      }}
-      justifyContent='space-between'
-      margin='50px auto'
-      flexWrap='wrap'
-    >
+    <>
       <Header />
-      {children}
-    </Grid>
-
+      <Box
+        display='flex'
+        justifyContent='space-between'
+        width='100%'
+      >
+        {children}
+      </Box>
+    </>
   )
 }
