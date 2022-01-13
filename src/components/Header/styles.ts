@@ -11,13 +11,13 @@ export const HeaderStyle = styled.header`
   justify-content: space-between;
   
   ${breakpointsMedia({
-    xs: css`
-      flex-direction: column;
-      height: 150px;
-      `,
     sm: css`
-      flex-direction: row
+      flex-direction: row;
       height: 64px;
+      `,
+    xs: css`
+      height: 150px;
+      flex-direction: column;
     `
   })}
 `
