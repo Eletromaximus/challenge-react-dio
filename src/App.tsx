@@ -41,7 +41,10 @@ export default function App () {
       <Grid
         display='flex'
         flexDirection='row'
-        value={10}
+        value={{
+          xs: 12,
+          sm: 10
+        }}
         margin='50px auto'
         flexWrap='wrap'
       >

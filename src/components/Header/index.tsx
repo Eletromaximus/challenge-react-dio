@@ -7,43 +7,34 @@ import Button from '../commons/Button'
 export default function Header () {
   return (
     <S.HeaderStyle>
-    <S.LeftSide>
-      Logo
-    </S.LeftSide>
+      <S.LeftSide>
+        Logo
+      </S.LeftSide>
 
-    <S.MiddleSide>
-      <div id="search">
-        <input type="text" placeholder='  Pesquisa' />
-        <SearchIcon fontSize='large' />
-      </div>
-    </S.MiddleSide>
+      <S.MiddleSide>
+        <div id="search">
+          <input type="text" placeholder='  Pesquisa' />
+          <SearchIcon fontSize='large' />
+        </div>
+      </S.MiddleSide>
 
-    <S.RightSide>
+      <S.RightSide>
 
-    <div
+      <div
         className="number-of-items"
-        style={{
-          borderRadius: '50%',
-          backgroundColor: '#FBE191',
-          width: '17px',
-          height: '17px',
-          textAlign: 'center',
-          position: 'absolute',
-          right: 20
-        }}
       >
-        1
-      </div>
+          1
+        </div>
 
-      <Button>
-        <FavoriteIcon fontSize='large' />
-      </Button>
+        <Button>
+          <FavoriteIcon fontSize='large' />
+        </Button>
 
-      <Button>
-        <ShoppingCartIcon fontSize='large'/>
-      </Button>
+        <Button>
+          <ShoppingCartIcon fontSize='large'/>
+        </Button>
 
-    </S.RightSide>
+      </S.RightSide>
     </S.HeaderStyle>
   )
 }
