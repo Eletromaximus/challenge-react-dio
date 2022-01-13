@@ -5,6 +5,7 @@ interface IBox {
   display?: string | object;
   flexDirection?: string | object;
   justifyContent?: string | object;
+  alignItems?: string | object;
   flex?: string | object;
   flexWrap?: string | object;
   backgroundColor?: string | object;
@@ -17,6 +18,7 @@ export const Box = styled.div<IBox>`
   ${propToStyle('display')}
   ${propToStyle('flexDirection')}
   ${propToStyle('justifyContent')}
+  ${propToStyle('alignItems')}
   ${propToStyle('flex')}
   ${propToStyle('flexWrap')}
   ${propToStyle('backgroundColor')}

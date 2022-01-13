@@ -40,8 +40,8 @@ export default function App () {
     <WebSitePages>
       <Grid
         display='flex'
+        flexDirection='row'
         value={10}
-        // justifyContent='space-between'
         margin='50px auto'
         flexWrap='wrap'
       >

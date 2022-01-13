@@ -63,20 +63,31 @@ export default function Card (data: ICard) {
       </S.LikeStyle>
 
       <S.ContentStyle >
-        <span>
+        <span className='title-of-movie'>
           <b>
             {card.title}
           </b>
         </span>
 
-        <div className="infos">
+        <div className='infos-of-movie'>
           <img
             src='/estrela.png'
             alt='star'
           />
-          <span>{card.voteAverage}</span>
-          <p>{card.genre}</p>
-        </div>
+
+          <span className='vote-average'>
+            <b>
+              {card.voteAverage}
+            </b>
+          </span>
+
+          <span className='genres-of-movie'>
+            {card.genre?.substring(0, 20) + '...'}
+            <span className='genres-of-movie'>
+              {card.genre}
+            </span>
+          </span>
+        </div >
 
         <span className="price">
           R$ 79,99

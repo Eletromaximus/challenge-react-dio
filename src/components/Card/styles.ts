@@ -29,9 +29,32 @@ export const ContentStyle = styled.div`
 
   justify-content: space-between;
 
-  .infos {
-    span {
+  .infos-of-movie {
+    display: flex;
+    align-items: center;
+
+    img {
       padding: 0 5px;
+    }
+
+    .genres-of-movie {
+      padding: 0 0 0 10px;
+
+      span {
+        visibility: hidden;
+        background-color: black;
+        text-align: center;
+        border-radius: 6px;
+        color: #fff;
+        padding: 5px;
+
+        position: absolute;
+        z-index: 1;
+      }
+    }
+
+    .genres-of-movie:hover span {
+      visibility: visible;
     }
   }
 
