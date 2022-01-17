@@ -4,7 +4,11 @@ import SearchIcon from '@mui/icons-material/Search'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import Button from '../commons/Button'
 
-export default function Header () {
+interface IHeader {
+  onClick: () => void
+}
+
+export default function Header ({ onClick }: IHeader) {
   return (
     <S.HeaderStyle>
       <S.LeftSide>
@@ -23,14 +27,16 @@ export default function Header () {
       <div
         className="number-of-items"
       >
-          1
-        </div>
+        1
+      </div>
 
         <Button>
           <FavoriteIcon fontSize='large' />
         </Button>
 
-        <Button>
+        <Button
+          onClick={() => onClick()}
+        >
           <ShoppingCartIcon fontSize='large'/>
         </Button>
 

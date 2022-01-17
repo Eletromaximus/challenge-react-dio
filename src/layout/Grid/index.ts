@@ -18,7 +18,7 @@ interface IGrid {
   padding?: string | object,
   margin?: string | object,
   flex?: number | object,
-  value: number | IValue
+  value: string | number | IValue
 }
 
 export const Grid = styled.div<IGrid>`
@@ -35,6 +35,12 @@ export const Grid = styled.div<IGrid>`
         flex-shrink: 0;
         flex-basis: ${(100 * value) / 12}%;
         max-width: ${(100 * value) / 12}%;
+      `
+    }
+
+    if (typeof value === 'string') {
+      return css`
+        width: auto;
       `
     }
 

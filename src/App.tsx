@@ -3,8 +3,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Card, { Genres } from './components/Card'
 import WebSitePages from './components/WebSitePage'
-import { Grid } from './layout/Grid'
-
+import { Box } from './layout/Box'
 interface IMovie {
   original_title: string,
   poster_path?: string,
@@ -38,12 +37,17 @@ export default function App () {
 
   return (
     <WebSitePages>
-      <Grid
+      <Box
         display='flex'
         flexDirection='row'
-        value={{
-          xs: 12,
-          sm: 10
+        justifyContent={{
+          md: 'space-between',
+          xs: 'center'
+        }}
+        flex={1}
+        maxWidth={{
+          sm: '83%',
+          xs: 'auto'
         }}
         margin='50px auto'
         flexWrap='wrap'
@@ -56,18 +60,17 @@ export default function App () {
             voteAverage={movie.vote_average}
             genre={movie.genre_ids.reduce((prev, actual, index) => {
               const search = Genres.find(genre => genre.id === actual)?.name
+
               if (search) {
                 return index === 0 ? search : prev + ', ' + search
               }
+
               return 'Gênero'
             }, '')}
           />
         })}
-      </Grid>
-{/*
-      <aside>
+      </Box>
 
-      </aside> */}
     </WebSitePages>
   )
 }
