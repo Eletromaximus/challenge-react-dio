@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 import { Box } from '../../layout/Box'
 import Header from '../Header'
 import ShoppingCard from '../ShoppingCard'
+import { ShoppingCarProv } from '../Provider'
 
 interface IWebSitePages {
-  // eslint-disable-next-line no-undef
-  children: React.ReactNode | any
+  children: ReactNode | any
 }
 export default function WebSitePages ({
   children
@@ -13,7 +13,7 @@ export default function WebSitePages ({
   const [shoppingCar, setShoppingCar] = useState(false)
 
   return (
-    <>
+    <ShoppingCarProv>
       <Header onClick={
         () => setShoppingCar(!shoppingCar)}
       />
@@ -25,6 +25,6 @@ export default function WebSitePages ({
           {children}
           {shoppingCar && <ShoppingCard />}
         </Box>
-    </>
+    </ShoppingCarProv>
   )
 }

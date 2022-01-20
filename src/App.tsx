@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Card, { Genres } from './components/Card'
 import WebSitePages from './components/WebSitePage'
 import { Box } from './layout/Box'
+import { v4 } from 'uuid'
 interface IMovie {
   original_title: string,
   poster_path?: string,
@@ -58,6 +59,8 @@ export default function App () {
             title={movie.original_title}
             poster={movie.poster_path}
             voteAverage={movie.vote_average}
+            imdbId={v4()}
+            price={79.99}
             genre={movie.genre_ids.reduce((prev, actual, index) => {
               const search = Genres.find(genre => genre.id === actual)?.name
 

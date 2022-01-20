@@ -1,8 +1,16 @@
 import { Button } from '@material-ui/core'
 import { Delete } from '@mui/icons-material'
+import { useContext } from 'react'
 import { Box } from '../../layout/Box'
+import { ShoppingCartContext } from '../Provider'
 
 export default function ShoppingCard () {
+  const {
+    items,
+    cleanCart,
+    removeItemsCart
+  } = useContext(ShoppingCartContext)
+
   return (
     <aside
       style={{
@@ -13,7 +21,7 @@ export default function ShoppingCard () {
     >
         <Box
           className="shopping-car"
-          width='350px'
+          width='400px'
           height='150vh'
           display='flex'
           flexDirection='column'
@@ -31,40 +39,54 @@ export default function ShoppingCard () {
               variant='outlined'
               endIcon={<Delete />}
               size='small'
+              onClick={() => cleanCart()}
             >
               Esvaziar
             </Button>
           </Box>
 
-          <Box
-            className="product"
-            width='100%'
-            padding='5px'
-            display='flex'
-            alignItems='center'
-            justifyContent='space-between'
-          >
-            <Box
-              width='64px'
-              height='64px'
-              className="icone-of-movie"
-            >
-              <img src="./icone-loading.png" alt="" />
-            </Box>
+            {items.length >= 0 && items.map((item) => (
+              <Box
+                key={item.title}
+                className="product"
+                width='100%'
+                padding='5px'
+                display='flex'
+                alignItems='center'
+                justifyContent='space-between'
+              >
+                <Box
+                  width='64px'
+                  height='64px'
+                  className="icone-of-movie"
+                >
+                  <img src="./icone-loading.png" alt="" />
+                </Box>
 
-            <div className="name-of-product">
-              Nome do Filme
-            </div>
+                <Box className="name-of-product">
+                  {item.title.substring(0, 20)}
+                </Box>
 
-            1 R$ 9,99
+                <Box
+                  justifyContent='space-between'
+                  display='flex'
+                  width='90px'
+                >
+                  <p>{item.nProduct}</p>
+                  <p>R$ {item.price}</p>
+                </Box>
 
-            <Button
-              variant='outlined'
-              endIcon={<Delete />}
-              size='small'
-            />
-          </Box>
+                <Button
+                  variant='outlined'
+                  endIcon={<Delete />}
+                  size='small'
+                  onClick={() => removeItemsCart(item)}
+                />
+              </Box>
+            ))}
+
         </Box>
+
       </aside>
   )
 }

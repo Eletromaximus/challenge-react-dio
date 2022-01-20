@@ -1,21 +1,29 @@
 import * as S from './styles'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Button from '../commons/Button'
+import { ShoppingCartContext } from '../Provider'
+
 export { Genres } from './Genres'
+
 interface ICard {
   title: string,
   poster?: string | null,
   voteAverage?: number,
-  genre?: string
+  genre?: string,
+  imdbId: string,
+  price: number
 }
 
 export default function Card (data: ICard) {
+  const { addItemsCart } = useContext(ShoppingCartContext)
   const [card, setCard] = useState<ICard>({
     poster: 'http://placehold.jp/200x200.png',
     title: 'Título',
-    voteAverage: 0
+    voteAverage: 0,
+    price: 79.99,
+    imdbId: 'xxxxxxxxxxxxxxx'
   })
 
   const [favorite, setFavofite] = useState(
@@ -38,7 +46,9 @@ export default function Card (data: ICard) {
         voteAverage: data.voteAverage || 0,
         genre: data.genre === 'undefined'
           ? 'Gênero'
-          : data.genre
+          : data.genre,
+        imdbId: data?.imdbId,
+        price: data.price
       })
     }
   }, [data])
@@ -90,11 +100,17 @@ export default function Card (data: ICard) {
         </div >
 
         <span className="price">
-          R$ 79,99
+          R$ {card.price}
         </span>
 
         <Button
           backgroundColor='#6558F5'
+          onClick={() => addItemsCart({
+            imdbId: card.imdbId,
+            price: card.price,
+            title: card.title,
+            nProduct: 1
+          })}
         >
           Adicionar
         </Button>
