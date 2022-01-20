@@ -3,7 +3,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { useContext, useEffect, useState } from 'react'
 import Button from '../commons/Button'
-import { ShoppingCartContext } from '../Provider'
+import { ShoppingCartContext } from '../Provider/ShoppingCartContext'
+import { WishCartContext } from '../Provider/WishCartContext'
 
 export { Genres } from './Genres'
 
@@ -18,6 +19,7 @@ interface ICard {
 
 export default function Card (data: ICard) {
   const { addItemsCart } = useContext(ShoppingCartContext)
+  const { wishs, addWishsCart, removeWishsCart } = useContext(WishCartContext)
   const [card, setCard] = useState<ICard>({
     poster: 'http://placehold.jp/200x200.png',
     title: 'Título',
@@ -37,6 +39,25 @@ export default function Card (data: ICard) {
       : <FavoriteBorderIcon fontSize='large' />
     )
   }, [like])
+
+  useEffect(() => {
+    like
+      ? addWishsCart({
+        title: card.title,
+        imdbId: card.imdbId,
+        price: card.price,
+        nProduct: 1
+      })
+      : removeWishsCart(card.imdbId)
+  }, [like])
+
+  useEffect(() => {
+    const detectWish = wishs.find((wish) => wish.imdbId === card.imdbId)
+
+    if (!detectWish) {
+      setLike(false)
+    }
+  }, [wishs])
 
   useEffect(() => {
     if (data) {
@@ -64,9 +85,9 @@ export default function Card (data: ICard) {
 
       <S.LikeStyle>
         <Button
-          onClick={
-            () => setLike(!like)
-          }
+          onClick={() => {
+            setLike(!like)
+          }}
         >
           {favorite}
         </Button>

@@ -57,8 +57,7 @@ export const MiddleSide = styled.div`
 `
 
 export const RightSide = styled.div`
-  
-  .number-of-items {
+  .number-of-items  {
     border-radius: 50%;
     background-color: #FBE191;
     width: 17px;
@@ -66,5 +65,15 @@ export const RightSide = styled.div`
     text-align: center;
     position: absolute;
     margin-left: 60px;
+  }
+
+  .number-of-wishs  {
+    border-radius: 50%;
+    background-color: #FBE191;
+    width: 17px;
+    height: 17px;
+    text-align: center;
+    position: absolute;
+    margin-left: 20px;
   }
 `

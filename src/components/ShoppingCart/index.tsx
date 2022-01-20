@@ -2,9 +2,9 @@ import { Button } from '@material-ui/core'
 import { Delete } from '@mui/icons-material'
 import { useContext } from 'react'
 import { Box } from '../../layout/Box'
-import { ShoppingCartContext } from '../Provider'
+import { ShoppingCartContext } from '../Provider/ShoppingCartContext'
 
-export default function ShoppingCard () {
+export default function ShoppingCart () {
   const {
     items,
     cleanCart,

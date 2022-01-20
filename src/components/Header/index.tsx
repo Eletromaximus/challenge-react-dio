@@ -4,15 +4,21 @@ import SearchIcon from '@mui/icons-material/Search'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import Button from '../commons/Button'
 import { useContext } from 'react'
-import { ShoppingCartContext } from '../Provider'
+import { ShoppingCartContext } from '../Provider/ShoppingCartContext'
+import { WishCartContext } from '../Provider/WishCartContext'
 import { Box } from '../../layout/Box'
 
 interface IHeader {
-  onClick: () => void
+  onItemClick: () => void,
+  onWishClick: () => void,
 }
 
-export default function Header ({ onClick }: IHeader) {
+export default function Header ({
+  onItemClick,
+  onWishClick
+}: IHeader) {
   const { items } = useContext(ShoppingCartContext)
+  const { wishs } = useContext(WishCartContext)
 
   return (
     <S.HeaderStyle>
@@ -28,20 +34,28 @@ export default function Header ({ onClick }: IHeader) {
       </S.MiddleSide>
 
       <S.RightSide>
+        <Box
+          className="number-of-wishs"
+          display={wishs.length === 0 ? 'none' : 'block'}
+        >
+          {wishs.length}
+        </Box>
 
-      <Box
-        className="number-of-items"
-        display={items.length === 0 ? 'none' : 'block'}
-      >
-        {items.length}
-      </Box>
+        <Box
+          className="number-of-items"
+          display={items.length === 0 ? 'none' : 'block'}
+        >
+          {items.length}
+        </Box>
 
-        <Button>
+        <Button
+          onClick={() => onWishClick()}
+        >
           <FavoriteIcon fontSize='large' />
         </Button>
 
         <Button
-          onClick={() => onClick()}
+          onClick={() => onItemClick()}
         >
           <ShoppingCartIcon fontSize='large'/>
         </Button>
