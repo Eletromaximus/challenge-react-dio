@@ -9,21 +9,27 @@ export const HeaderStyle = styled.header`
   padding: 10px 20px;
   flex-wrap: wrap;
   justify-content: space-between;
-  
-  ${breakpointsMedia({
-    sm: css`
-      flex-direction: row;
-      height: 64px;
-      `,
-    xs: css`
-      height: 150px;
-      flex-direction: column;
-    `
-  })}
+
+  height: 150px;
+  flex-direction: column;
+    
+
+
+@media only screen and (min-width: 520px) {
+  flex-direction: row;
+  height: 64px;
+}
 `
 
 export const LeftSide = styled.div`
  padding-right: 20px;
+ display: flex;
+ align-items: center;
+
+ img {
+   width: 32px;
+   height: 32px;
+ }
 
 `
 

@@ -5,7 +5,11 @@ import { Box } from '../../layout/Box'
 import MovieCard from '../Cards/MovieCard'
 import { ShoppingCartContext } from '../Provider/ShoppingCartContext'
 
-export default function ShoppingCart () {
+interface IShoppingCart {
+  onCheckout: () => void
+}
+
+export default function ShoppingCart ({ onCheckout }: IShoppingCart) {
   const {
     items,
     cleanCart,
@@ -34,7 +38,11 @@ export default function ShoppingCart () {
             justifyContent='space-between'
             margin='5px'
           >
-            <h4>Meu Carrinho</h4>
+            <Button
+              onClick={() => onCheckout()}
+            >
+              <h4>Meu Carrinho</h4>
+            </Button>
 
             <Button
               variant='outlined'
@@ -46,7 +54,7 @@ export default function ShoppingCart () {
             </Button>
           </Box>
 
-            {items.length >= 0 && items.map((item) => (
+            {items.length > 0 && items.map((item) => (
               <MovieCard
                 nProduct={item.nProduct}
                 price={item.price}

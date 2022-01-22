@@ -1,7 +1,6 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import MovieCard from '../../components/Cards/MovieCard'
 import { ShoppingCartContext } from '../../components/Provider/ShoppingCartContext'
-import WebSitePages from '../../components/WebSitePage'
 import { Box } from '../../layout/Box'
 import { Grid } from '../../layout/Grid'
 import { StyleForm } from './styles'
@@ -11,116 +10,139 @@ export default function Checkout () {
     items,
     removeItemsCart
   } = useContext(ShoppingCartContext)
+  const [total, setTotal] = useState(0)
+
+  useEffect(() => {
+    if (items) {
+      const soma: number = items.reduce((accumulator, actual, index) => {
+        const add = index > 0
+          ? accumulator + actual.price * actual.nProduct
+          : accumulator = actual.price * actual.nProduct
+
+        return add
+      }, 0)
+
+      setTotal(soma)
+    }
+  })
 
   return (
-    <WebSitePages>
-      <Box
-        id='buy-form'
-        display='flex'
-        justifyContent='space-between'
-        width='100%'
-        flexWrap='wrap'
-        margin={{
-          lg: '20px 100px',
-          md: '20px auto'
-        }}
+    <Box
+      id='buy-form'
+      display='flex'
+      justifyContent={{
+        md: 'space-around',
+        sm: 'center'
+      }}
+      width='100%'
+      flexWrap='wrap'
+    >
+      <Grid
+        value={4}
+        minWidth='450px'
       >
-        <Grid
-          value={4}
-          minWidth='450px'
-        >
-          <h1 id='title-form'>Finalizar Compra</h1>
+        <h1 id='title-form'>Finalizar Compra</h1>
 
-          <StyleForm action=''>
+        <StyleForm action=''>
+          <input
+            type='text'
+            className='name'
+            placeholder='Nome Completo'
+          />
+
+          <Box
+            display='flex'
+            margin='20px 0'
+            width='100%'
+            justifyContent='space-between'
+          >
             <input
               type='text'
-              className='name'
-              placeholder='Nome Completo'
+              className='cpf'
+              placeholder='CPF'
             />
-
-            <Box
-              display='flex'
-              margin='20px 0'
-              width='100%'
-              justifyContent='space-between'
-            >
-              <input
-                type='text'
-                className='cpf'
-                placeholder='CPF'
-              />
-
-              <input
-                type='text'
-                className='cel'
-                placeholder='Celular'
-              />
-            </Box>
 
             <input
               type='text'
-              className='email'
-              placeholder='E-mail'
+              className='cel'
+              placeholder='Celular'
+            />
+          </Box>
+
+          <input
+            type='text'
+            className='email'
+            placeholder='E-mail'
+          />
+
+          <Box
+            display='flex'
+            margin='20px 0'
+            width='100%'
+            justifyContent='space-between'
+          >
+            <input
+              type='text'
+              className='cep'
+              placeholder='CEP'
             />
 
-            <Box
-              display='flex'
-              margin='20px 0'
-              width='100%'
-              justifyContent='space-between'
-            >
-              <input
-                type='text'
-                className='cep'
-                placeholder='CEP'
-              />
+            <input
+              type='text'
+              className='address'
+              placeholder='Endereço'
+            />
+          </Box>
 
-              <input
-                type='text'
-                className='address'
-                placeholder='Endereço'
-              />
-            </Box>
+          <Box
+            display='flex'
+            margin='20px 0'
+            width='100%'
+            justifyContent='space-between'
+          >
+            <input
+              type='text'
+              className='city'
+              placeholder='Cidade'
+            />
 
-            <Box
-              display='flex'
-              margin='20px 0'
-              width='100%'
-              justifyContent='space-between'
-            >
-              <input
-                type='text'
-                className='city'
-                placeholder='Cidade'
-              />
+            <input
+              type='text'
+              className='state'
+              placeholder='Estado'
+            />
+          </Box>
 
-              <input
-                type='text'
-                className='state'
-                placeholder='Estado'
-              />
-            </Box>
+        </StyleForm>
+      </Grid>
 
-          </StyleForm>
-        </Grid>
-
-        <Grid
-          id='buy-cart'
-          value={4}
-          minWidth='450px'
+      <Grid
+        id='buy-cart'
+        value={4}
+        minWidth='450px'
+        margin='80px 0 0 0'
+      >
+        {items.length > 0 && items.map(item => {
+          return <MovieCard
+            nProduct={item.nProduct}
+            price={item.price}
+            removeMovie={() => removeItemsCart(item)}
+            title={item.title}
+            key={item.imdbId}
+          />
+        })}
+        {items.length > 0 && <Box
+          display='flex'
+          justifyContent='space-between'
+          width='100%'
+          alignItems='center'
+          style={{
+            borderTop: '5px solid gray'
+          }}
         >
-          {items && items.map(item => {
-            return <MovieCard
-              nProduct={item.nProduct}
-              price={item.price}
-              removeMovie={() => removeItemsCart(item)}
-              title={item.title}
-              key={item.imdbId}
-            />
-          })}
-
-        </Grid>
-      </Box>
-    </WebSitePages>
+          Total: <h3>{total.toFixed(2)}</h3>
+        </Box>}
+      </Grid>
+    </Box>
   )
 }

@@ -3,7 +3,6 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { v4 } from 'uuid'
 import Card, { Genres } from '../components/Movies'
-import WebSitePages from '../components/WebSitePage'
 import { Box } from '../layout/Box'
 
 interface IMovie {
@@ -38,43 +37,40 @@ export default function HomePage () {
   }, [])
 
   return (
-    <WebSitePages>
-      <Box
-        display='flex'
-        flexDirection='row'
-        justifyContent={{
-          md: 'space-between',
-          xs: 'center'
-        }}
-        flex={1}
-        maxWidth={{
-          sm: '83%',
-          xs: 'auto'
-        }}
-        margin='50px auto'
-        flexWrap='wrap'
-      >
-        {tmdb && tmdb.map((movie: IMovie) => {
-          return <Card
-            key={movie.id}
-            title={movie.original_title}
-            poster={movie.poster_path}
-            voteAverage={movie.vote_average}
-            imdbId={v4()}
-            price={79.99}
-            genre={movie.genre_ids.reduce((prev, actual, index) => {
-              const search = Genres.find(genre => genre.id === actual)?.name
+    <Box
+      display='flex'
+      flexDirection='row'
+      justifyContent={{
+        md: 'space-between',
+        xs: 'center'
+      }}
+      flex={1}
+      maxWidth={{
+        sm: '83%',
+        xs: 'auto'
+      }}
+      margin='50px auto'
+      flexWrap='wrap'
+    >
+      {tmdb && tmdb.map((movie: IMovie) => {
+        return <Card
+          key={movie.id}
+          title={movie.original_title}
+          poster={movie.poster_path}
+          voteAverage={movie.vote_average}
+          imdbId={v4()}
+          price={79.99}
+          genre={movie.genre_ids.reduce((prev, actual, index) => {
+            const search = Genres.find(genre => genre.id === actual)?.name
 
-              if (search) {
-                return index === 0 ? search : prev + ', ' + search
-              }
+            if (search) {
+              return index === 0 ? search : prev + ', ' + search
+            }
 
-              return 'Gênero'
-            }, '')}
-          />
-        })}
-      </Box>
-
-    </WebSitePages>
+            return 'Gênero'
+          }, '')}
+        />
+      })}
+    </Box>
   )
 }

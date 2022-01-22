@@ -29,7 +29,7 @@ export default function MovieCard (item: IMovieCard) {
       </Box>
 
       <Box className="name-of-product">
-        {item.title.substring(0, 20)}
+        {item.title.substring(0, 18)}
       </Box>
 
       <Box

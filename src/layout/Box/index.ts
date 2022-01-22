@@ -16,6 +16,7 @@ interface IBox {
   width?: string | object;
   height?: string | object;
   border?: string | object;
+  color?: string | object;
   maxWidth?: number | string | object;
 }
 
@@ -34,5 +35,6 @@ export const Box = styled.div<IBox>`
   ${propToStyle('width')}
   ${propToStyle('height')}
   ${propToStyle('border')}
+  ${propToStyle('color')}
   ${propToStyle('maxWidth')}
 `

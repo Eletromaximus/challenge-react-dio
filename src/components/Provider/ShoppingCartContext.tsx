@@ -12,7 +12,7 @@ interface IProduct {
 }
 
 export const ShoppingCartContext = createContext({
-  items: [{ title: '', imdbId: '', price: 0, nProduct: 1 }],
+  items: [{ title: '', imdbId: '', price: 0, nProduct: 0 }],
   addItemsCart: (item: IProduct) => {},
   removeItemsCart: (item: IProduct) => {},
   cleanCart: () => {}
