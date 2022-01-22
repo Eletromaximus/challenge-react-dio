@@ -8,7 +8,7 @@ import { WishCartContext } from '../Provider/WishCartContext'
 
 export { Genres } from './Genres'
 
-interface ICard {
+interface IMovie {
   title: string,
   poster?: string | null,
   voteAverage?: number,
@@ -17,10 +17,10 @@ interface ICard {
   price: number
 }
 
-export default function Card (data: ICard) {
+export default function Movies (data: IMovie) {
   const { addItemsCart } = useContext(ShoppingCartContext)
   const { wishs, addWishsCart, removeWishsCart } = useContext(WishCartContext)
-  const [card, setCard] = useState<ICard>({
+  const [movie, setMovie] = useState<IMovie>({
     poster: 'http://placehold.jp/200x200.png',
     title: 'Título',
     voteAverage: 0,
@@ -43,16 +43,16 @@ export default function Card (data: ICard) {
   useEffect(() => {
     like
       ? addWishsCart({
-        title: card.title,
-        imdbId: card.imdbId,
-        price: card.price,
+        title: movie.title,
+        imdbId: movie.imdbId,
+        price: movie.price,
         nProduct: 1
       })
-      : removeWishsCart(card.imdbId)
+      : removeWishsCart(movie.imdbId)
   }, [like])
 
   useEffect(() => {
-    const detectWish = wishs.find((wish) => wish.imdbId === card.imdbId)
+    const detectWish = wishs.find((wish) => wish.imdbId === movie.imdbId)
 
     if (!detectWish) {
       setLike(false)
@@ -61,7 +61,7 @@ export default function Card (data: ICard) {
 
   useEffect(() => {
     if (data) {
-      setCard({
+      setMovie({
         poster: data.poster || 'http://placehold.jp/200x200.png',
         title: data.title,
         voteAverage: data.voteAverage || 0,
@@ -96,7 +96,7 @@ export default function Card (data: ICard) {
       <S.ContentStyle >
         <span className='title-of-movie'>
           <b>
-            {card.title}
+            {movie.title}
           </b>
         </span>
 
@@ -108,28 +108,28 @@ export default function Card (data: ICard) {
 
           <span className='vote-average'>
             <b>
-              {card.voteAverage}
+              {movie.voteAverage}
             </b>
           </span>
 
           <span className='genres-of-movie'>
-            {card.genre?.substring(0, 20) + '...'}
+            {movie.genre?.substring(0, 20) + '...'}
             <span className='genres-of-movie'>
-              {card.genre}
+              {movie.genre}
             </span>
           </span>
         </div >
 
         <span className="price">
-          R$ {card.price}
+          R$ {movie.price}
         </span>
 
         <Button
           backgroundColor='#6558F5'
           onClick={() => addItemsCart({
-            imdbId: card.imdbId,
-            price: card.price,
-            title: card.title,
+            imdbId: movie.imdbId,
+            price: movie.price,
+            title: movie.title,
             nProduct: 1
           })}
         >

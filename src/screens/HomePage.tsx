@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { v4 } from 'uuid'
-import Card, { Genres } from '../components/Card'
+import Card, { Genres } from '../components/Movies'
 import WebSitePages from '../components/WebSitePage'
 import { Box } from '../layout/Box'
 

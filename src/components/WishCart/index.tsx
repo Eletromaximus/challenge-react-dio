@@ -2,7 +2,9 @@ import { Button } from '@material-ui/core'
 import { Delete } from '@mui/icons-material'
 import { useContext } from 'react'
 import { Box } from '../../layout/Box'
+import { ShoppingCartContext } from '../Provider/ShoppingCartContext'
 import { WishCartContext } from '../Provider/WishCartContext'
+import WishCard from '../Cards/WishCard'
 
 export default function WishCart () {
   const {
@@ -10,6 +12,7 @@ export default function WishCart () {
     removeWishsCart,
     cleanWishCart
   } = useContext(WishCartContext)
+  const { addItemsCart } = useContext(ShoppingCartContext)
 
   return (
     <aside
@@ -46,42 +49,13 @@ export default function WishCart () {
           </Box>
 
             {wishs.length >= 0 && wishs.map((wish) => (
-              <Box
-                key={wish.title}
-                className="product"
-                width='100%'
-                padding='5px'
-                display='flex'
-                alignItems='center'
-                justifyContent='space-between'
-              >
-                <Box
-                  width='64px'
-                  height='64px'
-                  className="icone-of-movie"
-                >
-                  <img src="./icone-loading.png" alt="" />
-                </Box>
-
-                <Box className="name-of-product">
-                  {wish.title.substring(0, 20)}
-                </Box>
-
-                <Box
-                  justifyContent='space-between'
-                  display='flex'
-                  width='90px'
-                >
-                  <p>R$ {wish.price}</p>
-                </Box>
-
-                <Button
-                  variant='outlined'
-                  endIcon={<Delete />}
-                  size='small'
-                  onClick={() => removeWishsCart(wish.imdbId)}
-                />
-              </Box>
+              <WishCard
+                onAdd={() => addItemsCart(wish)}
+                onRemove={() => removeWishsCart(wish.imdbId)}
+                price={wish.price}
+                title={wish.title}
+                key={wish.imdbId}
+              />
             ))}
 
         </Box>

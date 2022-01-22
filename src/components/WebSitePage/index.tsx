@@ -20,10 +20,16 @@ export default function WebSitePages ({
       <WishCartProv>
         <Header
           onWishClick={
-            () => setWishCar(!wishCar)
+            () => {
+              setWishCar(!wishCar)
+              setShoppingCar(false)
+            }
           }
           onItemClick={
-            () => setShoppingCar(!shoppingCar)
+            () => {
+              setShoppingCar(!shoppingCar)
+              setWishCar(false)
+            }
           }
         />
           <Box

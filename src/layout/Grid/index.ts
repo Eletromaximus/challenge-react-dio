@@ -18,6 +18,7 @@ interface IGrid {
   padding?: string | object,
   margin?: string | object,
   flex?: number | object,
+  minWidth?: string | object,
   value: string | number | IValue
 }
 
@@ -89,6 +90,8 @@ export const Grid = styled.div<IGrid>`
   }}
 
   ${propToStyle('display')}
+  ${propToStyle('flex')}
+  ${propToStyle('minWidth')}
   ${propToStyle('flexWrap')}
   ${propToStyle('alignItems')}
   ${propToStyle('justifyContent')}

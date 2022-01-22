@@ -2,6 +2,7 @@ import { Button } from '@material-ui/core'
 import { Delete } from '@mui/icons-material'
 import { useContext } from 'react'
 import { Box } from '../../layout/Box'
+import MovieCard from '../Cards/MovieCard'
 import { ShoppingCartContext } from '../Provider/ShoppingCartContext'
 
 export default function ShoppingCart () {
@@ -46,43 +47,13 @@ export default function ShoppingCart () {
           </Box>
 
             {items.length >= 0 && items.map((item) => (
-              <Box
-                key={item.title}
-                className="product"
-                width='100%'
-                padding='5px'
-                display='flex'
-                alignItems='center'
-                justifyContent='space-between'
-              >
-                <Box
-                  width='64px'
-                  height='64px'
-                  className="icone-of-movie"
-                >
-                  <img src="./icone-loading.png" alt="" />
-                </Box>
-
-                <Box className="name-of-product">
-                  {item.title.substring(0, 20)}
-                </Box>
-
-                <Box
-                  justifyContent='space-between'
-                  display='flex'
-                  width='90px'
-                >
-                  <p>{item.nProduct}</p>
-                  <p>R$ {item.price}</p>
-                </Box>
-
-                <Button
-                  variant='outlined'
-                  endIcon={<Delete />}
-                  size='small'
-                  onClick={() => removeItemsCart(item)}
-                />
-              </Box>
+              <MovieCard
+                nProduct={item.nProduct}
+                price={item.price}
+                removeMovie={() => removeItemsCart(item)}
+                title={item.title}
+                key={item.imdbId}
+              />
             ))}
 
         </Box>
