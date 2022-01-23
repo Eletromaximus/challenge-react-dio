@@ -31,7 +31,11 @@ export default function WebSitePages () {
             }
           }
 
-          onContent={() => setContent(<HomePage />)}
+          onContent={() => {
+            setContent(<HomePage />)
+            setWishCar(false)
+            setShoppingCar(false)
+          }}
         />
           <Box
             display='flex'
@@ -46,7 +50,12 @@ export default function WebSitePages () {
               }
             }
             />}
-            {wishCar && <WishCart />}
+            {wishCar && <WishCart
+              onCheckout={() => {
+                setContent(<CheckoutPage />)
+                setShoppingCar(false)
+              }}
+            />}
           </Box>
       </WishCartProv>
     </ShoppingCarProv>

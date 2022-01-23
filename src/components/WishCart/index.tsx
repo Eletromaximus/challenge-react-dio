@@ -6,7 +6,11 @@ import { ShoppingCartContext } from '../Provider/ShoppingCartContext'
 import { WishCartContext } from '../Provider/WishCartContext'
 import WishCard from '../Cards/WishCard'
 
-export default function WishCart () {
+interface IWishCart {
+  onCheckout: () => void
+}
+
+export default function WishCart ({ onCheckout }: IWishCart) {
   const {
     wishs,
     removeWishsCart,
@@ -24,7 +28,10 @@ export default function WishCart () {
     >
         <Box
           className="shopping-car"
-          width='400px'
+          width={{
+            sm: '400px',
+            xs: '320px'
+          }}
           height='150vh'
           display='flex'
           flexDirection='column'
@@ -36,7 +43,11 @@ export default function WishCart () {
             justifyContent='space-between'
             margin='5px'
           >
-            <h4>Meu Carrinho</h4>
+            <Button
+              onClick={() => onCheckout()}
+            >
+              <h4>Meu Carrinho</h4>
+            </Button>
 
             <Button
               variant='outlined'

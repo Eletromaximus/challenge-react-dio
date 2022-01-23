@@ -38,4 +38,19 @@ export const StyleForm = styled.form`
     width: 70%;
     margin-right: 10px;
   }
+
+  @media only screen and (max-width: 480px) {
+    .city,
+    .address,
+    .cep,
+    .state {
+      width: 100%;
+      margin-top: 20px;
+      margin-left: 0px;
+    }
+
+    .cel {
+      margin-top: 20px;
+    }
+  }
 `

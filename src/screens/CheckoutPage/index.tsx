@@ -39,7 +39,10 @@ export default function Checkout () {
     >
       <Grid
         value={4}
-        minWidth='450px'
+        minWidth={{
+          sm: '450px',
+          xs: '320px'
+        }}
       >
         <h1 id='title-form'>Finalizar Compra</h1>
 
@@ -51,7 +54,10 @@ export default function Checkout () {
           />
 
           <Box
-            display='flex'
+            display={{
+              sm: 'flex',
+              xs: 'block'
+            }}
             margin='20px 0'
             width='100%'
             justifyContent='space-between'
@@ -76,8 +82,14 @@ export default function Checkout () {
           />
 
           <Box
-            display='flex'
-            margin='20px 0'
+            display={{
+              sm: 'flex',
+              xs: 'block'
+            }}
+            margin={{
+              sm: '20px 0',
+              xs: 0
+            }}
             width='100%'
             justifyContent='space-between'
           >
@@ -95,8 +107,14 @@ export default function Checkout () {
           </Box>
 
           <Box
-            display='flex'
-            margin='20px 0'
+            display={{
+              sm: 'flex',
+              xs: 0
+            }}
+            margin={{
+              sm: '20px 0',
+              xs: 0
+            }}
             width='100%'
             justifyContent='space-between'
           >
@@ -119,7 +137,10 @@ export default function Checkout () {
       <Grid
         id='buy-cart'
         value={4}
-        minWidth='450px'
+        minWidth={{
+          sm: '450px',
+          xs: '320px'
+        }}
         margin='80px 0 0 0'
       >
         {items.length > 0 && items.map(item => {

@@ -26,7 +26,10 @@ export default function ShoppingCart ({ onCheckout }: IShoppingCart) {
     >
         <Box
           className="shopping-car"
-          width='400px'
+          width={{
+            sm: '400px',
+            xs: '320px'
+          }}
           height='150vh'
           display='flex'
           flexDirection='column'
