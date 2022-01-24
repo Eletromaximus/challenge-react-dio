@@ -1,21 +1,22 @@
 // eslint-disable-next-line no-use-before-define
-import React from 'react'
+import React, { MouseEventHandler } from 'react'
 import { StyleButton } from './styles'
 
 interface IButton{
-  onClick?: () => void,
+  onClick?: MouseEventHandler<HTMLButtonElement>,
   backgroundColor?: string,
   children?: React.ReactNode | undefined
-  color?: string
+  color?: string,
+  type?: 'button' | 'submit' | 'reset'
 }
 export default function Button ({
-  onClick, children, backgroundColor, color
+  onClick, children, backgroundColor, ...props
 }: IButton) {
   return (
     <StyleButton
       background={backgroundColor}
       onClick={onClick}
-      color={color}
+      {...props}
     >
       {children}
     </StyleButton>

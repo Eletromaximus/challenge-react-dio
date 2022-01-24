@@ -3,7 +3,7 @@ import MovieCard from '../../components/Cards/MovieCard'
 import { ShoppingCartContext } from '../../components/Provider/ShoppingCartContext'
 import { Box } from '../../layout/Box'
 import { Grid } from '../../layout/Grid'
-import { StyleForm } from './styles'
+import Form from '../../components/Form'
 
 export default function Checkout () {
   const {
@@ -46,92 +46,7 @@ export default function Checkout () {
       >
         <h1 id='title-form'>Finalizar Compra</h1>
 
-        <StyleForm action=''>
-          <input
-            type='text'
-            className='name'
-            placeholder='Nome Completo'
-          />
-
-          <Box
-            display={{
-              sm: 'flex',
-              xs: 'block'
-            }}
-            margin='20px 0'
-            width='100%'
-            justifyContent='space-between'
-          >
-            <input
-              type='text'
-              className='cpf'
-              placeholder='CPF'
-            />
-
-            <input
-              type='text'
-              className='cel'
-              placeholder='Celular'
-            />
-          </Box>
-
-          <input
-            type='text'
-            className='email'
-            placeholder='E-mail'
-          />
-
-          <Box
-            display={{
-              sm: 'flex',
-              xs: 'block'
-            }}
-            margin={{
-              sm: '20px 0',
-              xs: 0
-            }}
-            width='100%'
-            justifyContent='space-between'
-          >
-            <input
-              type='text'
-              className='cep'
-              placeholder='CEP'
-            />
-
-            <input
-              type='text'
-              className='address'
-              placeholder='Endereço'
-            />
-          </Box>
-
-          <Box
-            display={{
-              sm: 'flex',
-              xs: 0
-            }}
-            margin={{
-              sm: '20px 0',
-              xs: 0
-            }}
-            width='100%'
-            justifyContent='space-between'
-          >
-            <input
-              type='text'
-              className='city'
-              placeholder='Cidade'
-            />
-
-            <input
-              type='text'
-              className='state'
-              placeholder='Estado'
-            />
-          </Box>
-
-        </StyleForm>
+        <Form />
       </Grid>
 
       <Grid

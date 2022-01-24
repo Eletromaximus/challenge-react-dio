@@ -11,7 +11,7 @@ import CheckoutPage from './screens/CheckoutPage'
 export default function WebSitePages () {
   const [shoppingCar, setShoppingCar] = useState(false)
   const [wishCar, setWishCar] = useState(false)
-  const [content, setContent] = useState(<CheckoutPage />)
+  const [content, setContent] = useState(<HomePage />)
 
   return (
     <ShoppingCarProv>
@@ -53,7 +53,7 @@ export default function WebSitePages () {
             {wishCar && <WishCart
               onCheckout={() => {
                 setContent(<CheckoutPage />)
-                setShoppingCar(false)
+                setWishCar(false)
               }}
             />}
           </Box>
