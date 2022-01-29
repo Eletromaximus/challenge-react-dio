@@ -3,18 +3,14 @@ import { Delete } from '@mui/icons-material'
 import { useContext } from 'react'
 import { Box } from '../../layout/Box'
 import MovieCard from '../Cards/MovieCard'
-import { ShoppingCartContext } from '../Provider/ShoppingCartContext'
+import { CartContext } from '../Provider/ShoppingCartContext'
 
 interface IShoppingCart {
   onCheckout: () => void
 }
 
 export default function ShoppingCart ({ onCheckout }: IShoppingCart) {
-  const {
-    items,
-    cleanCart,
-    removeItemsCart
-  } = useContext(ShoppingCartContext)
+  const { status, dispatch } = useContext(CartContext)
 
   return (
     <aside
@@ -51,17 +47,20 @@ export default function ShoppingCart ({ onCheckout }: IShoppingCart) {
               variant='outlined'
               endIcon={<Delete />}
               size='small'
-              onClick={() => cleanCart()}
+              onClick={() => dispatch({ type: 'cleanCart' })}
             >
               Esvaziar
             </Button>
           </Box>
 
-            {items.length > 0 && items.map((item) => (
+            {status.length > 0 && status.map((item) => (
               <MovieCard
                 nProduct={item.nProduct}
                 price={item.price}
-                removeMovie={() => removeItemsCart(item)}
+                removeMovie={() => dispatch({
+                  type: 'removeMovie',
+                  imdb: item.imdbId
+                })}
                 title={item.title}
                 key={item.imdbId}
               />

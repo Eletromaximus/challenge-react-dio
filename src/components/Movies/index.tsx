@@ -3,7 +3,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { useContext, useEffect, useState } from 'react'
 import Button from '../commons/Button'
-import { ShoppingCartContext } from '../Provider/ShoppingCartContext'
+import { CartContext } from '../Provider/ShoppingCartContext'
 import { WishCartContext } from '../Provider/WishCartContext'
 
 export { Genres } from './Genres'
@@ -18,7 +18,7 @@ interface IMovie {
 }
 
 export default function Movies (data: IMovie) {
-  const { addItemsCart } = useContext(ShoppingCartContext)
+  const { dispatch } = useContext(CartContext)
   const { wishs, addWishsCart, removeWishsCart } = useContext(WishCartContext)
   const [movie, setMovie] = useState<IMovie>({
     poster: 'http://placehold.jp/200x200.png',
@@ -126,11 +126,14 @@ export default function Movies (data: IMovie) {
 
         <Button
           backgroundColor='#6558F5'
-          onClick={() => addItemsCart({
-            imdbId: movie.imdbId,
-            price: movie.price,
-            title: movie.title,
-            nProduct: 1
+          onClick={() => dispatch({
+            type: 'addMovie',
+            payload: {
+              imdbId: movie.imdbId,
+              price: movie.price,
+              title: movie.title,
+              nProduct: 1
+            }
           })}
         >
           Adicionar

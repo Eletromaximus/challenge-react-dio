@@ -4,7 +4,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import Button from '../commons/Button'
 import { useContext, useEffect, useState } from 'react'
-import { ShoppingCartContext } from '../Provider/ShoppingCartContext'
+import { CartContext } from '../Provider/ShoppingCartContext'
 import { WishCartContext } from '../Provider/WishCartContext'
 import { Box } from '../../layout/Box'
 
@@ -19,18 +19,18 @@ export default function Header ({
   onWishClick,
   onContent
 }: IHeader) {
-  const { items } = useContext(ShoppingCartContext)
+  const { status } = useContext(CartContext)
   const { wishs } = useContext(WishCartContext)
   const [heart, setHeart] = useState(false)
   const [cart, setCart] = useState(false)
 
   useEffect(() => {
-    if (items.length > 0) {
+    if (status.length > 0) {
       setCart(true)
     } else {
       setCart(false)
     }
-  }, [items])
+  }, [status])
 
   useEffect(() => {
     if (wishs.length > 0) {
@@ -75,9 +75,9 @@ export default function Header ({
 
         <Box
           className='number-of-items'
-          display={items.length === 0 ? 'none' : 'block'}
+          display={status.length === 0 ? 'none' : 'block'}
         >
-          {items.length}
+          {status.length}
         </Box>
 
         <Button

@@ -1,69 +1,85 @@
-import { createContext, ReactNode, useState } from 'react'
+import { useReducer, createContext, ReactNode } from 'react'
 
-interface IShoppingCarProv {
-  children: ReactNode
-}
-
-interface IProduct {
+interface Item {
   title: string,
   imdbId: string,
   price: number,
   nProduct: number
 }
 
-export const ShoppingCartContext = createContext({
-  items: [{ title: '', imdbId: '', price: 0, nProduct: 0 }],
-  addItemsCart: (item: IProduct) => {},
-  removeItemsCart: (item: IProduct) => {},
-  cleanCart: () => {}
+type Action = {
+  type: 'addMovie',
+  payload: Item
+} | {type: 'removeMovie', imdb: string }
+  | {type: 'cleanCart' }
+
+interface IShoppingCart {
+  children: ReactNode
+}
+
+const INITIAL_STATE: Item[] = []
+
+export const CartContext = createContext({
+  status: INITIAL_STATE,
+  dispatch: (action: Action) => {}
 })
 
-export const ShoppingCarProv = ({ children }: IShoppingCarProv) => {
-  const [cart, setCart] = useState<IProduct[]>([])
+function reducer (state: Item[], action: Action) {
+  switch (action.type) {
+    case 'addMovie':
+      if (state.length === 0) {
+        state = [action.payload]
+        return state
+      } else {
+        console.log(action.payload.imdbId)
+        const isProduct = state.find(movie => movie.imdbId === action.payload.imdbId)
 
-  const handleAddItemCart = (movie: IProduct) => {
-    const isProduct = cart.find(item => item.imdbId === movie.imdbId)
+        if (isProduct) {
+          const index = state.indexOf(isProduct)
+          const newCart = [...state]
+          newCart[index].nProduct += 1
+          state = newCart
+          return state
+        }
 
-    if (isProduct) {
-      const index = cart.indexOf(isProduct)
-      const newCart = [...cart]
-      newCart[index].nProduct += 1
-      return setCart(newCart)
-    }
+        state = [...state, action.payload]
+        return state
+      }
 
-    const itemObject = movie
-    setCart([...cart, itemObject])
+    case 'removeMovie':
+      if (state.length > 0) {
+        const isProduct = state.find(movie => movie.imdbId === action.imdb)
+
+        if (isProduct && isProduct.nProduct > 1) {
+          const index = state.indexOf(isProduct)
+          const newCart = [...state]
+          newCart[index].nProduct -= 1
+          state = [...newCart]
+          return state
+        }
+
+        const filteredCart = state.filter(
+          (item) => item.imdbId !== action.imdb
+        )
+
+        state = [...filteredCart]
+        return state
+      }
+      return state
+
+    case 'cleanCart':
+      state = []
+      return state
+
+    default:
+      return state
   }
+}
 
-  const handleRemoveItemCart = (movie: IProduct) => {
-    const isProduct = cart.find(item => item.imdbId === movie.imdbId)
+export default function X ({ children }: IShoppingCart) {
+  const [status, dispatch] = useReducer(reducer, [])
 
-    if (movie.nProduct > 1 && isProduct) {
-      const index = cart.indexOf(isProduct)
-      const newCart = [...cart]
-      newCart[index].nProduct -= 1
-      return setCart(newCart)
-    }
-
-    const filteredCart = cart.filter(
-      (cartItem) => cartItem.title !== movie.title
-    )
-
-    setCart(filteredCart)
-  }
-
-  function clearCart () {
-    setCart([])
-  }
-
-  return <ShoppingCartContext.Provider
-    value={{
-      items: cart,
-      addItemsCart: (item: IProduct) => handleAddItemCart(item),
-      removeItemsCart: (item: IProduct) => handleRemoveItemCart(item),
-      cleanCart: () => clearCart()
-    }}
-  >
+  return <CartContext.Provider value={{ status, dispatch }}>
     {children}
-  </ShoppingCartContext.Provider>
+  </CartContext.Provider>
 }

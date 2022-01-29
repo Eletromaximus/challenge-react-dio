@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ShoppingCarProv } from './components/Provider/ShoppingCartContext'
+import X from './components/Provider/ShoppingCartContext'
 import { WishCartProv } from './components/Provider/WishCartContext'
 import Header from './components/Header'
 import WishCart from './components/WishCart'
@@ -14,7 +14,7 @@ export default function WebSitePages () {
   const [content, setContent] = useState(<HomePage />)
 
   return (
-    <ShoppingCarProv>
+    <X>
       <WishCartProv>
         <Header
           onWishClick={
@@ -58,6 +58,6 @@ export default function WebSitePages () {
             />}
           </Box>
       </WishCartProv>
-    </ShoppingCarProv>
+    </X>
   )
 }

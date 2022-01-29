@@ -2,7 +2,7 @@ import { Button } from '@material-ui/core'
 import { Delete } from '@mui/icons-material'
 import { useContext } from 'react'
 import { Box } from '../../layout/Box'
-import { ShoppingCartContext } from '../Provider/ShoppingCartContext'
+import { CartContext } from '../Provider/ShoppingCartContext'
 import { WishCartContext } from '../Provider/WishCartContext'
 import WishCard from '../Cards/WishCard'
 
@@ -16,7 +16,7 @@ export default function WishCart ({ onCheckout }: IWishCart) {
     removeWishsCart,
     cleanWishCart
   } = useContext(WishCartContext)
-  const { addItemsCart } = useContext(ShoppingCartContext)
+  const { dispatch } = useContext(CartContext)
 
   return (
     <aside
@@ -61,7 +61,7 @@ export default function WishCart ({ onCheckout }: IWishCart) {
 
             {wishs.length >= 0 && wishs.map((wish) => (
               <WishCard
-                onAdd={() => addItemsCart(wish)}
+                onAdd={() => dispatch({ type: 'addMovie', payload: wish })}
                 onRemove={() => removeWishsCart(wish.imdbId)}
                 price={wish.price}
                 title={wish.title}
