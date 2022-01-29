@@ -1,37 +1,23 @@
-import { useReducer, createContext, ReactNode } from 'react'
-
-interface Item {
+export interface IMovie {
   title: string,
   imdbId: string,
   price: number,
   nProduct: number
 }
 
-type Action = {
+export type ActionMovie = {
   type: 'addMovie',
-  payload: Item
+  payload: IMovie
 } | {type: 'removeMovie', imdb: string }
   | {type: 'cleanCart' }
 
-interface IShoppingCart {
-  children: ReactNode
-}
-
-const INITIAL_STATE: Item[] = []
-
-export const CartContext = createContext({
-  status: INITIAL_STATE,
-  dispatch: (action: Action) => {}
-})
-
-function reducer (state: Item[], action: Action) {
+export function reducerMovie (state: IMovie[], action: ActionMovie) {
   switch (action.type) {
     case 'addMovie':
       if (state.length === 0) {
         state = [action.payload]
         return state
       } else {
-        console.log(action.payload.imdbId)
         const isProduct = state.find(movie => movie.imdbId === action.payload.imdbId)
 
         if (isProduct) {
@@ -74,12 +60,4 @@ function reducer (state: Item[], action: Action) {
     default:
       return state
   }
-}
-
-export default function X ({ children }: IShoppingCart) {
-  const [status, dispatch] = useReducer(reducer, [])
-
-  return <CartContext.Provider value={{ status, dispatch }}>
-    {children}
-  </CartContext.Provider>
 }

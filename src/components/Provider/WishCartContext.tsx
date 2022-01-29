@@ -1,60 +1,63 @@
-import { createContext, ReactNode, useState } from 'react'
-
-interface IProduct {
+interface IMovie {
   title: string,
   imdbId: string,
   price: number,
   nProduct: number
 }
 
-interface IWishProv {
-  children: ReactNode
-}
+export type ActionWish = {
+  type: 'addWish',
+  payload: IMovie
+} | {type: 'removeWish', imdb: string}
+  | {type: 'cleanWishs'}
 
-export const WishCartContext = createContext({
-  wishs: [{ title: '', imdbId: '', price: 0, nProduct: 1 }],
-  addWishsCart: (item: IProduct) => {},
-  removeWishsCart: (imdb: string) => {},
-  cleanWishCart: () => {}
-})
+export function reduceWish (state: IMovie[], action: ActionWish) {
+  switch (action.type) {
+    case 'addWish':
+      if (state.length === 0) {
+        state = [action.payload]
+        return state
+      } else {
+        const isProduct = state.find(movie => movie.imdbId === action.payload.imdbId)
 
-export function WishCartProv ({ children }: IWishProv) {
-  const [cartWish, setCartWish] = useState<IProduct[]>([])
+        if (isProduct) {
+          const index = state.indexOf(isProduct)
+          const newCart = [...state]
+          newCart[index].nProduct += 1
+          state = newCart
+          return state
+        }
 
-  const addWishItem = (movie: IProduct) => {
-    const isProduct = cartWish.find(item => item.imdbId === movie.imdbId)
+        state = [...state, action.payload]
+        return state
+      }
 
-    if (isProduct) {
-      const index = cartWish.indexOf(isProduct)
-      const newCart = [...cartWish]
-      newCart[index].nProduct += 1
-      return setCartWish(newCart)
-    }
+    case 'removeWish':
+      if (state.length > 0) {
+        const isProduct = state.find(movie => movie.imdbId === action.imdb)
 
-    const itemObject = movie
-    setCartWish([...cartWish, itemObject])
+        if (isProduct && isProduct.nProduct > 1) {
+          const index = state.indexOf(isProduct)
+          const newCart = [...state]
+          newCart[index].nProduct -= 1
+          state = [...newCart]
+          return state
+        }
+
+        const filteredCart = state.filter(
+          (item) => item.imdbId !== action.imdb
+        )
+
+        state = [...filteredCart]
+        return state
+      }
+      return state
+
+    case 'cleanWishs':
+      state = []
+      return state
+
+    default:
+      return state
   }
-
-  const removeWishItem = (imdb: string) => {
-    const filteredCart = cartWish.filter(
-      (cartItem) => cartItem.imdbId !== imdb
-    )
-
-    setCartWish(filteredCart)
-  }
-
-  function clearCartWish () {
-    setCartWish([])
-  }
-
-  return <WishCartContext.Provider
-    value={{
-      wishs: cartWish,
-      addWishsCart: (item: IProduct) => addWishItem(item),
-      removeWishsCart: (imdb: string) => removeWishItem(imdb),
-      cleanWishCart: () => clearCartWish()
-    }}
-    >
-      {children}
-    </WishCartContext.Provider>
 }

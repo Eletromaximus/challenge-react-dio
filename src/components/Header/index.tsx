@@ -4,8 +4,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import Button from '../commons/Button'
 import { useContext, useEffect, useState } from 'react'
-import { CartContext } from '../Provider/ShoppingCartContext'
-import { WishCartContext } from '../Provider/WishCartContext'
+import { Context } from '../Provider'
 import { Box } from '../../layout/Box'
 
 interface IHeader {
@@ -19,26 +18,28 @@ export default function Header ({
   onWishClick,
   onContent
 }: IHeader) {
-  const { status } = useContext(CartContext)
-  const { wishs } = useContext(WishCartContext)
+  const {
+    wish,
+    movie
+  } = useContext(Context)
   const [heart, setHeart] = useState(false)
   const [cart, setCart] = useState(false)
 
   useEffect(() => {
-    if (status.length > 0) {
+    if (movie.length > 0) {
       setCart(true)
     } else {
       setCart(false)
     }
-  }, [status])
+  }, [movie])
 
   useEffect(() => {
-    if (wishs.length > 0) {
+    if (wish.length > 0) {
       setHeart(true)
     } else {
       setHeart(false)
     }
-  }, [wishs])
+  }, [wish])
 
   return (
     <S.HeaderStyle>
@@ -68,16 +69,16 @@ export default function Header ({
       <S.RightSide>
         <Box
           className='number-of-wishs'
-          display={wishs.length === 0 ? 'none' : 'block'}
+          display={wish.length === 0 ? 'none' : 'block'}
         >
-          {wishs.length}
+          {wish.length}
         </Box>
 
         <Box
           className='number-of-items'
-          display={status.length === 0 ? 'none' : 'block'}
+          display={movie.length === 0 ? 'none' : 'block'}
         >
-          {status.length}
+          {movie.length}
         </Box>
 
         <Button

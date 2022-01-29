@@ -2,8 +2,7 @@ import { Button } from '@material-ui/core'
 import { Delete } from '@mui/icons-material'
 import { useContext } from 'react'
 import { Box } from '../../layout/Box'
-import { CartContext } from '../Provider/ShoppingCartContext'
-import { WishCartContext } from '../Provider/WishCartContext'
+import { Context } from '../Provider'
 import WishCard from '../Cards/WishCard'
 
 interface IWishCart {
@@ -12,11 +11,10 @@ interface IWishCart {
 
 export default function WishCart ({ onCheckout }: IWishCart) {
   const {
-    wishs,
-    removeWishsCart,
-    cleanWishCart
-  } = useContext(WishCartContext)
-  const { dispatch } = useContext(CartContext)
+    wish,
+    dispatchMovie,
+    dispatchWish
+  } = useContext(Context)
 
   return (
     <aside
@@ -53,16 +51,19 @@ export default function WishCart ({ onCheckout }: IWishCart) {
               variant='outlined'
               endIcon={<Delete />}
               size='small'
-              onClick={() => cleanWishCart()}
+              onClick={() => dispatchWish({ type: 'cleanWishs' })}
             >
               Esvaziar
             </Button>
           </Box>
 
-            {wishs.length >= 0 && wishs.map((wish) => (
+            {wish.length >= 0 && wish.map((wish) => (
               <WishCard
-                onAdd={() => dispatch({ type: 'addMovie', payload: wish })}
-                onRemove={() => removeWishsCart(wish.imdbId)}
+                onAdd={() => dispatchMovie({ type: 'addMovie', payload: wish })}
+                onRemove={() => dispatchWish({
+                  type: 'removeWish',
+                  imdb: wish.imdbId
+                })}
                 price={wish.price}
                 title={wish.title}
                 key={wish.imdbId}

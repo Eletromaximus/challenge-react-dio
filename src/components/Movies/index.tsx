@@ -3,8 +3,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { useContext, useEffect, useState } from 'react'
 import Button from '../commons/Button'
-import { CartContext } from '../Provider/ShoppingCartContext'
-import { WishCartContext } from '../Provider/WishCartContext'
+import { Context } from '../Provider'
 
 export { Genres } from './Genres'
 
@@ -18,8 +17,7 @@ interface IMovie {
 }
 
 export default function Movies (data: IMovie) {
-  const { dispatch } = useContext(CartContext)
-  const { wishs, addWishsCart, removeWishsCart } = useContext(WishCartContext)
+  const { wish, dispatchMovie, dispatchWish } = useContext(Context)
   const [movie, setMovie] = useState<IMovie>({
     poster: 'http://placehold.jp/200x200.png',
     title: 'Título',
@@ -42,22 +40,28 @@ export default function Movies (data: IMovie) {
 
   useEffect(() => {
     like
-      ? addWishsCart({
-        title: movie.title,
-        imdbId: movie.imdbId,
-        price: movie.price,
-        nProduct: 1
+      ? dispatchWish({
+        type: 'addWish',
+        payload: {
+          title: movie.title,
+          imdbId: movie.imdbId,
+          price: movie.price,
+          nProduct: 1
+        }
       })
-      : removeWishsCart(movie.imdbId)
+      : dispatchWish({
+        type: 'removeWish',
+        imdb: movie.imdbId
+      })
   }, [like])
 
   useEffect(() => {
-    const detectWish = wishs.find((wish) => wish.imdbId === movie.imdbId)
+    const detectWish = wish.find((item) => item.imdbId === movie.imdbId)
 
     if (!detectWish) {
       setLike(false)
     }
-  }, [wishs])
+  }, [wish])
 
   useEffect(() => {
     if (data) {
@@ -126,7 +130,7 @@ export default function Movies (data: IMovie) {
 
         <Button
           backgroundColor='#6558F5'
-          onClick={() => dispatch({
+          onClick={() => dispatchMovie({
             type: 'addMovie',
             payload: {
               imdbId: movie.imdbId,

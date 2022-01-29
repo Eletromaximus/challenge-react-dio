@@ -1,20 +1,20 @@
 import { useContext, useEffect, useState } from 'react'
 import MovieCard from '../../components/Cards/MovieCard'
-import { CartContext } from '../../components/Provider/ShoppingCartContext'
+import { Context } from '../../components/Provider'
 import { Box } from '../../layout/Box'
 import { Grid } from '../../layout/Grid'
 import Form from '../../components/Form'
 
 export default function Checkout () {
   const {
-    status,
-    dispatch
-  } = useContext(CartContext)
+    movie,
+    dispatchMovie
+  } = useContext(Context)
   const [total, setTotal] = useState(0)
 
   useEffect(() => {
-    if (status) {
-      const soma: number = status.reduce((accumulator, actual, index) => {
+    if (movie) {
+      const soma: number = movie.reduce((accumulator, actual, index) => {
         const add = index > 0
           ? accumulator + actual.price * actual.nProduct
           : accumulator = actual.price * actual.nProduct
@@ -58,11 +58,11 @@ export default function Checkout () {
         }}
         margin='80px 0 0 0'
       >
-        {status.length > 0 && status.map(item => {
+        {movie.length > 0 && movie.map(item => {
           return <MovieCard
             nProduct={item.nProduct}
             price={item.price}
-            removeMovie={() => dispatch({
+            removeMovie={() => dispatchMovie({
               type: 'removeMovie',
               imdb: item.imdbId
             })}
@@ -70,7 +70,7 @@ export default function Checkout () {
             key={item.imdbId}
           />
         })}
-        {status.length > 0 && <Box
+        {movie.length > 0 && <Box
           display='flex'
           justifyContent='space-between'
           width='100%'
